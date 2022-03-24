@@ -4,11 +4,14 @@ import dataModels.Response;
 import etc.Settings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import steps.GetDataSteps;
 import steps.ValidationSteps;
 
 import java.util.ArrayList;
 
+@Execution(ExecutionMode.CONCURRENT) // можно запускать многопоточно)
 public class ExampleTests {
 
     // Settings.connectAddress можно так же куда-то под капот занести, чтоб постоянно не вызывать.

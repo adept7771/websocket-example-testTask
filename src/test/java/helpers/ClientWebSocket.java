@@ -62,6 +62,7 @@ public class ClientWebSocket extends WebSocketClient {
     public ArrayList<String> getResponses(int messagesToGet) throws InterruptedException {
         this.connect();
         long totalPollingInterval = 0;
+        //System.out.println(Thread.currentThread()); Чтобы убедиться, что воркеры в разных тредах
         while (responseMessages.size() < messagesToGet) {
             Thread.sleep(Settings.pollingResponseIntervalMs);
             totalPollingInterval += Settings.pollingResponseIntervalMs;
