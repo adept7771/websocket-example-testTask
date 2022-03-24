@@ -1,0 +1,13 @@
+.idea
+.gradle
+.allure
+*.iml
+*/target
+*.log
+build
+video
+out
+allure-results
+/gradlew
+/gradlew.bat
+.todo
