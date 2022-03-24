@@ -3,6 +3,7 @@ package steps;
 import com.google.gson.Gson;
 import dataModels.Response;
 import helpers.ClientWebSocket;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class GetDataSteps {
 
     Gson gson = new Gson();
 
+    @Step("Шаг - получить количество ответов {0} по адресу {1}")
     public ArrayList<Response> getResponsesByNum(int numberOfResponses, String connectionAddress) throws InterruptedException {
         ArrayList<String> responseStrings = new ClientWebSocket(connectionAddress)
                 .getResponses(numberOfResponses);
@@ -27,6 +29,7 @@ public class GetDataSteps {
     }
 
 
+    @Step("Шаг - получить гарантированный ответ с значениями A и B по адресу {10}")
     public Response getResponseWithAAndBGuaranteed(String connectionAddress) throws InterruptedException {
         int attempts = 0;
         while (attempts < 20) {
