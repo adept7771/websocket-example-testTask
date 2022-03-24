@@ -1,5 +1,5 @@
 
-package dataObj;
+package dataModels;
 
 import javax.annotation.Generated;
 

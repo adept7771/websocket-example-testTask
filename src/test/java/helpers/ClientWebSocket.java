@@ -1,14 +1,19 @@
 package helpers;
 
+import etc.Settings;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 
+// не работал раньше с вебсокетами и не знаю какую все таки либу надо использовать по-правильному,
+// либа TooTallNate/Java-WebSocket мне показалась наиболее простой как для запуска с пол-пинка.
+// единственно, что респонсы возвращает строчками. Зато под капотом уже интерфейс runnable, который
+// запускает отдельный тред! В моих тестах я это не обыгрывал, но это можно использовать в дальнейшем
+// для многопоточки.
 
 public class ClientWebSocket extends WebSocketClient {
 
@@ -44,9 +49,9 @@ public class ClientWebSocket extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        System.out.println(
-                "Connection closed by " + (remote ? "remote peer" : "us") + " Code: " + code + " Reason: "
-                        + reason);
+//        System.out.println(
+//                "Connection closed by " + (remote ? "remote peer" : "us") + " Code: " + code + " Reason: "
+//                        + reason);
     }
 
     @Override
@@ -56,8 +61,13 @@ public class ClientWebSocket extends WebSocketClient {
 
     public ArrayList<String> getResponses(int messagesToGet) throws InterruptedException {
         this.connect();
+        long totalPollingInterval = 0;
         while (responseMessages.size() < messagesToGet) {
-            Thread.sleep(10);
+            Thread.sleep(Settings.pollingResponseIntervalMs);
+            totalPollingInterval += Settings.pollingResponseIntervalMs;
+            if (totalPollingInterval > Settings.pollingResponseIntervalMaxTimeMs) {
+                break;
+            }
         }
         this.close();
         Thread.currentThread().interrupt();
