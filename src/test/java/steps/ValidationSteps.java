@@ -39,8 +39,8 @@ public class ValidationSteps {
         response.getData().getB().forEach(n -> firstBValues.add(Double.valueOf(n.get(0))));
         response.getData().getA().forEach(n -> firstAValues.add(Double.valueOf(n.get(0))));
 
-        Double minFirstA = firstAValues.stream().collect(Collectors.reducing(Double::min)).get();
-        Double maxFirstB = firstBValues.stream().collect(Collectors.reducing(Double::max)).get();
+        Double minFirstA = firstAValues.stream().reduce(Double::min).get();
+        Double maxFirstB = firstBValues.stream().reduce(Double::max).get();
         //System.out.printf("Max first B - %s Min first A - %s", maxFirstB, minFirstA);
         // можно прикрутить логгер, для более качественного логгирования
         Assertions.assertTrue(maxFirstB < minFirstA,
