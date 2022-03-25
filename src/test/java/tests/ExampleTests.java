@@ -3,7 +3,6 @@ package tests;
 import dataModels.Response;
 import etc.Settings;
 import io.qameta.allure.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -24,35 +23,41 @@ public class ExampleTests {
 
     @Test
     @DisplayName("Значение U больше предыдущего")
-    @Severity(SeverityLevel.BLOCKER)
-    public void uNextGreaterThenPrevious() throws InterruptedException {
+    @Severity(SeverityLevel.NORMAL)
+    public void uNextGreaterThenPreviousTest() throws InterruptedException {
         ArrayList<Response> responses =
                 getDataSteps.getResponsesByNum(20, Settings.connectAddress);
         validationSteps.validateUNextGreaterThenPrevious(responses);
     }
 
-    // у вас во втором тесте ошибка. Имеется требование по максимальности для b первого числа. В примере
-    // говорится про числа 0	:	0.07093900 и 1	:	7.66120000 при этом максимальным указано число
-    // 0.07093900. Поэтому этот тест я сделал просто на проверку первых числе в A / B. Следующий уже
-    // с требованием максимальности к первому числу.
-
     @Test
-    @DisplayName("Первое значение B меньше первого значения А")
+    @DisplayName("Максимальное первое знач. B меньше минимального первого знач. A")
     @Severity(SeverityLevel.BLOCKER)
-    public void firstBLessFirstA() throws InterruptedException {
-        Response response =
-                getDataSteps.getResponseWithAAndBGuaranteed(Settings.connectAddress);
-        validationSteps.firstBLessFirstA(response);
-    }
-
-    @Test
-    @DisplayName("Первое МАКС значение B меньше первого МИНИМАЛЬНОГО значения А")
-    @Severity(SeverityLevel.BLOCKER)
-    public void firstMaxBLessFirstMinA() throws InterruptedException {
+    public void maxFirstBLessMinFirstA() throws InterruptedException {
         Response response =
                 getDataSteps.getResponseWithAAndBGuaranteed(Settings.connectAddress);
         validationSteps.firstMaxBLessFirstMinA(response);
     }
+
+//    @Test
+//    @Disabled
+//    @DisplayName("Первое значение B меньше первого значения А")
+//    @Severity(SeverityLevel.BLOCKER)
+//    public void firstBLessFirstA() throws InterruptedException { // не верно понял условие, игнорим
+//        Response response =
+//                getDataSteps.getResponseWithAAndBGuaranteed(Settings.connectAddress);
+//        validationSteps.firstBLessFirstA(response);
+//    }
+
+//    @Test
+//    @Disabled
+//    @DisplayName("Первое МАКС значение B меньше первого МИНИМАЛЬНОГО значения А")
+//    @Severity(SeverityLevel.BLOCKER)
+//    public void firstMaxBLessFirstMinA() throws InterruptedException { // не верно понял условие, игнорим
+//        Response response =
+//                getDataSteps.getResponseWithAAndBGuaranteed(Settings.connectAddress);
+//        validationSteps.firstMaxBLessFirstMinA(response);
+//    }
 
     GetDataSteps getDataSteps = new GetDataSteps();
     ValidationSteps validationSteps = new ValidationSteps();
